@@ -106,9 +106,11 @@ if($redis) {
 
       // Does this namespace also contain subkeys?
       if (count($item) > 0) {
+		$keys = $redis->keys($fullkey . ($fullkey === '' ? '' : ':') . '*');
+		$len = count($keys);
         ?>
         <li class="folder<?php echo ($fullkey === '') ? '' : ' collapsed'?><?php echo $islast ? ' last' : ''?>">
-        <div class="icon"><?php echo format_html($name)?>&nbsp;<span class="info">(<?php echo count($item)?>)</span>
+        <div class="icon"><?php echo format_html($name)?>&nbsp;<span class="info">(<?php echo $len?>)</span>
         <?php if ($fullkey !== '') { ?><a href="delete.php?s=<?php echo $server['id']?>&amp;d=<?php echo $server['db']?>&amp;tree=<?php echo urlencode($fullkey)?>:" class="deltree"><img src="images/delete.png" width="10" height="10" title="Delete tree" alt="[X]"></a><?php } ?>
         </div><ul>
         <?php
