@@ -52,6 +52,11 @@ background: url(../images/add.png) left center no-repeat;
 
 
 .data {
-white-space: pre;
+white-space: pre-line;
+}
+
+pre {
+font-size: 11px;
+background: #eee;
 }
 

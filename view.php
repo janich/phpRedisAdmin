@@ -182,14 +182,44 @@ if (isset($pagination)) {
 
 // String
 if ($type == 'string') { ?>
+<?php 
 
+	$json = @json_decode($value);
+	if (json_last_error() === JSON_ERROR_NONE) {
+		$json = json_encode($json, JSON_PRETTY_PRINT);
+	}
+?>
+	
+<a href="#raw">View Raw</a> <?php if ($json): ?>&middot; <a href="#json">View Json</a><?php endif; ?>
+
+<a name="raw" />
 <table>
-<tr><td><div class=data><?php echo format_html($value)?></div></td><td><div>
+<tr>
+<td valign="top"><div>
   <a href="edit.php?s=<?php echo $server['id']?>&amp;d=<?php echo $server['db']?>&amp;type=string&amp;key=<?php echo urlencode($_GET['key'])?>"><img src="images/edit.png" width="16" height="16" title="Edit" alt="[E]"></a>
-</div></td><td><div>
+</div></td>
+<td valign="top"><div>
   <a href="delete.php?s=<?php echo $server['id']?>&amp;d=<?php echo $server['db']?>&amp;type=string&amp;key=<?php echo urlencode($_GET['key'])?>" class="delval"><img src="images/delete.png" width="16" height="16" title="Delete" alt="[X]"></a>
-</div></td></tr>
+</div></td>
+<td><div class=data><?php echo format_html($value)?></div></td>
+</tr>
 </table>
+
+<?php if ($json): ?>
+
+<a name="json" />
+<table>
+<tr>
+<td valign="top"><div>
+  <a href="edit.php?s=<?php echo $server['id']?>&amp;d=<?php echo $server['db']?>&amp;type=string&amp;key=<?php echo urlencode($_GET['key'])?>"><img src="images/edit.png" width="16" height="16" title="Edit" alt="[E]"></a>
+</div></td>
+<td valign="top"><div>
+  <a href="delete.php?s=<?php echo $server['id']?>&amp;d=<?php echo $server['db']?>&amp;type=string&amp;key=<?php echo urlencode($_GET['key'])?>" class="delval"><img src="images/delete.png" width="16" height="16" title="Delete" alt="[X]"></a>
+</div></td>
+<td><div class=data><pre><?php echo htmlspecialchars($json); ?></pre></div></td>
+</tr>
+</table>
+<?php endif; ?>
 
 <?php }
 
